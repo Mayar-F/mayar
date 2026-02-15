@@ -15,7 +15,7 @@
             --white: #ffffff;
         }
 
-        /* * التنسيق العام ومنع التمرير الأفقي */
+        /* * التنسيق العام */
         * {
             margin: 0;
             padding: 0;
@@ -25,7 +25,7 @@
 
         html, body {
             width: 100%;
-            overflow-x: hidden !important;
+            overflow-x: hidden !important; /* منع التمرير الأفقي */
             position: relative;
         }
 
@@ -36,35 +36,43 @@
             line-height: 1.6;
         }
 
+        /* * زر الصعود للأعلى (جديد) */
+        #backToTop {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none; /* مخفي افتراضياً */
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        #backToTop:hover {
+            background-color: #d97706;
+            transform: translateY(-5px);
+        }
+
         /* * حركات الهيدر المعقدة (Custom Animations) */
         @keyframes complex-entrance-right {
-            0% {
-                opacity: 0;
-                transform: translate3d(100px, -80px, 0) scale(0.3) rotate(10deg);
-            }
-            60% {
-                opacity: 0.8;
-                transform: translate3d(-10px, 10px, 0) scale(1.1) rotate(-2deg);
-            }
-            100% {
-                opacity: 1;
-                transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
-            }
+            0% { opacity: 0; transform: translate3d(100px, -80px, 0) scale(0.3) rotate(10deg); }
+            60% { opacity: 0.8; transform: translate3d(-10px, 10px, 0) scale(1.1) rotate(-2deg); }
+            100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
         }
 
         @keyframes complex-entrance-left {
-            0% {
-                opacity: 0;
-                transform: translate3d(-100px, -80px, 0) scale(0.3) rotate(-10deg);
-            }
-            60% {
-                opacity: 0.8;
-                transform: translate3d(10px, 10px, 0) scale(1.1) rotate(2deg);
-            }
-            100% {
-                opacity: 1;
-                transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
-            }
+            0% { opacity: 0; transform: translate3d(-100px, -80px, 0) scale(0.3) rotate(-10deg); }
+            60% { opacity: 0.8; transform: translate3d(10px, 10px, 0) scale(1.1) rotate(2deg); }
+            100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
         }
 
         .animate-complex-right {
@@ -108,16 +116,17 @@
             display: flex;
             flex-direction: column;
             padding-top: 80px;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.3);
         }
-
         .sidebar.active { left: 0; }
-
         .sidebar a {
             color: white;
             text-decoration: none;
             padding: 15px 30px;
             border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: 0.3s;
         }
+        .sidebar a:hover { padding-right: 40px; background: var(--primary-color); }
 
         /* * الهيدر */
         header {
@@ -134,7 +143,7 @@
             background-attachment: fixed;
             color: white;
             padding: 20px;
-            overflow: hidden;
+            overflow: hidden; /* لمنع الأنميشن من توسيع الصفحة */
         }
 
         .hero-content h1 { 
@@ -143,9 +152,8 @@
             border-bottom: 4px solid var(--accent-color);
             padding-bottom: 10px;
         }
-        
         .hero-content p { font-size: 1.5rem; font-weight: 300; }
-
+        
         .btn-cta {
             display: inline-block;
             margin-top: 30px;
@@ -157,6 +165,7 @@
             font-weight: bold;
             transition: 0.3s;
         }
+        .btn-cta:hover { transform: scale(1.1); background: #d97706; }
 
         /* * الأقسام */
         section { 
@@ -165,16 +174,15 @@
             margin: 0 auto;
             overflow: hidden;
         }
+        .section-title { text-align: center; margin-bottom: 60px; font-size: 2.2rem; position: relative; }
+        .section-title::after { content: ''; display: block; width: 80px; height: 4px; background: var(--primary-color); margin: 15px auto 0; }
 
-        .section-title { text-align: center; margin-bottom: 60px; font-size: 2.2rem; }
-
-        /* * الشبكة (تعديل 250px للتجاوب) */
+        /* * الشبكة (Card Grid) */
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 30px;
         }
-
         .card {
             background: white;
             padding: 40px 20px;
@@ -183,23 +191,34 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.08);
             transition: 0.3s;
         }
+        .card:hover { transform: translateY(-10px); }
 
+        /* * من أنا */
         .about-container { display: flex; flex-wrap: wrap; align-items: center; gap: 50px; }
         .about-text, .about-image { flex: 1; min-width: 300px; }
-        .about-image img { max-width: 100%; border-radius: 20px; }
+        .about-image img { max-width: 100%; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
 
+        /* * معرض الأعمال */
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 20px;
         }
+        .portfolio-item { height: 250px; border-radius: 15px; overflow: hidden; position: relative; cursor: pointer; }
+        .portfolio-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .portfolio-overlay {
+            position: absolute; bottom: -100%; left: 0; width: 100%; height: 100%;
+            background: rgba(37, 99, 235, 0.9); display: flex; justify-content: center;
+            align-items: center; color: white; transition: 0.4s; flex-direction: column;
+        }
+        .portfolio-item:hover .portfolio-overlay { bottom: 0; }
+        .portfolio-item:hover img { transform: scale(1.1); }
 
-        .portfolio-item { height: 250px; border-radius: 15px; overflow: hidden; position: relative; }
-        .portfolio-item img { width: 100%; height: 100%; object-fit: cover; }
-
+        /* * التواصل */
         .contact-section { background: var(--dark-color); color: white; text-align: center; border-radius: 20px; padding: 60px 20px; }
         .social-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
         .social-links a { color: white; font-size: 2rem; width: 60px; height: 60px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+        .social-links a:hover { background: var(--accent-color); transform: rotate(360deg); }
 
         footer { text-align: center; padding: 20px; background: var(--dark-color); color: white; }
 
@@ -210,6 +229,10 @@
     </style>
 </head>
 <body>
+
+    <button id="backToTop" onclick="scrollToTop()">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
     <button class="menu-btn" onclick="toggleMenu()">
         <i class="fas fa-bars"></i>
@@ -232,7 +255,7 @@
             <br>
             <p class="animate-complex-left">Civil Engineer Mayar</p>
             
-            <div data-aos="fade-up" data-aos-delay="1000">
+            <div data-aos="fade-up" data-aos-delay="1200">
                 <p style="font-size: 1.2rem; opacity: 0.9; margin-top: 15px; margin-bottom: 20px;">نحو عمران مستدام</p>
                 <a href="#contact" class="btn-cta">Contact me</a>
             </div>
@@ -240,32 +263,38 @@
     </header>
 
     <section id="about">
-        <h2 class="section-title" data-aos="fade-up">من أنا</h2>
+        <h2 class="section-title" data-aos="fade-down">من أنا</h2>
         <div class="about-container">
-            <div class="about-text" data-aos="fade-left">
+            <div class="about-text" data-aos="fade-left" data-aos-duration="1200">
                 <h3>مهندس مدني شغوف بالتطوير</h3>
-                <p>أؤمن بأن الهندسة ليست مجرد أرقام بل فن صناعة الحياة.</p>
+                <p>أؤمن بأن الهندسة ليست مجرد أرقام ومخططات، بل هي فن صناعة الحياة وبناء المستقبل.</p>
+                <ul style="list-style: none; margin-top: 15px;">
+                    <li><i class="fas fa-check-circle" style="color: var(--primary-color); margin-left: 10px;"></i> تصميم وتنفيذ احترافي</li>
+                    <li><i class="fas fa-check-circle" style="color: var(--primary-color); margin-left: 10px;"></i> التزام بأعلى معايير الجودة</li>
+                </ul>
             </div>
-            <div class="about-image" data-aos="fade-right">
+            <div class="about-image" data-aos="fade-right" data-aos-duration="1200">
                 <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1931&auto=format&fit=crop" alt="صورة المهندس ميار">
             </div>
         </div>
     </section>
 
     <section id="services" style="background-color: #f1f5f9;">
-        <h2 class="section-title" data-aos="fade-up">الخدمات الهندسية</h2>
+        <h2 class="section-title" data-aos="zoom-in">الخدمات الهندسية</h2>
         <div class="grid-container">
-            <div class="card" data-aos="zoom-in">
+            <div class="card" data-aos="zoom-in-up" data-aos-delay="0">
                 <i class="fas fa-drafting-compass fa-4x" style="color: var(--primary-color); margin-bottom: 20px;"></i>
                 <h3>التصميم الإنشائي</h3>
                 <p>إعداد المخططات الإنشائية المتكاملة.</p>
             </div>
-            <div class="card" data-aos="zoom-in" data-aos-delay="200">
+            
+            <div class="card" data-aos="zoom-in-up" data-aos-delay="200">
                 <i class="fas fa-hard-hat fa-4x" style="color: var(--primary-color); margin-bottom: 20px;"></i>
                 <h3>الإشراف الهندسي</h3>
-                <p>متابعة دقيقة لمراحل التنفيذ.</p>
+                <p>متابعة دقيقة لمراحل التنفيذ في الموقع.</p>
             </div>
-            <div class="card" data-aos="zoom-in" data-aos-delay="400">
+
+            <div class="card" data-aos="zoom-in-up" data-aos-delay="400">
                 <i class="fas fa-city fa-4x" style="color: var(--primary-color); margin-bottom: 20px;"></i>
                 <h3>إدارة المشاريع</h3>
                 <p>تخطيط وجدولة المشاريع الهندسية.</p>
@@ -274,26 +303,30 @@
     </section>
 
     <section id="portfolio">
-        <h2 class="section-title" data-aos="fade-up">معرض الأعمال</h2>
+        <h2 class="section-title" data-aos="fade-down">معرض الأعمال</h2>
         <div class="portfolio-grid">
-            <div class="portfolio-item" data-aos="flip-left">
+            <div class="portfolio-item" data-aos="flip-left" data-aos-duration="1000">
                 <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?q=80&w=2070&auto=format&fit=crop" alt="مشروع">
+                <div class="portfolio-overlay"><h3>مشروع سكني</h3></div>
             </div>
-            <div class="portfolio-item" data-aos="flip-left" data-aos-delay="200">
+            <div class="portfolio-item" data-aos="flip-left" data-aos-duration="1000" data-aos-delay="200">
                 <img src="https://images.unsplash.com/photo-1590486803833-1c5dc8ddd4c8?q=80&w=1974&auto=format&fit=crop" alt="مشروع">
+                <div class="portfolio-overlay"><h3>فيلا خاصة</h3></div>
             </div>
-            <div class="portfolio-item" data-aos="flip-left" data-aos-delay="400">
+            <div class="portfolio-item" data-aos="flip-left" data-aos-duration="1000" data-aos-delay="400">
                 <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=2070&auto=format&fit=crop" alt="مشروع">
+                <div class="portfolio-overlay"><h3>مول تجاري</h3></div>
             </div>
         </div>
     </section>
 
     <section id="contact">
-        <div class="contact-section" data-aos="zoom-out">
+        <div class="contact-section" data-aos="zoom-out-up" data-aos-duration="1000">
             <h2>تواصل معي</h2>
             <div class="social-links">
                 <a href="https://wa.me/qr/STWXDCBOX27JN1" target="_blank"><i class="fab fa-whatsapp"></i></a>
                 <a href="https://www.facebook.com/share/17msQ4zCaW/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
                 <a href="mailto:mayar.farhoud@gmail.com"><i class="fas fa-envelope"></i></a>
             </div>
         </div>
@@ -305,10 +338,36 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
-        AOS.init({ duration: 1000, once: false });
+        // * تهيئة مكتبة الحركة
+        AOS.init({
+            duration: 1000, 
+            once: false, // هام جداً: يسمح بتكرار الحركة عند العودة للقسم
+            mirror: true, // يسمح بالحركة عند التمرير للأعلى أيضاً
+            offset: 120,
+        });
 
+        // * القائمة الجانبية
         function toggleMenu() {
             document.getElementById('sidebar').classList.toggle('active');
+        }
+
+        // * كود زر الصعود للأعلى
+        const backToTopBtn = document.getElementById("backToTop");
+
+        window.onscroll = function() {
+            // يظهر الزر إذا نزلنا أكثر من 300 بكسل
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                backToTopBtn.style.display = "flex";
+            } else {
+                backToTopBtn.style.display = "none";
+            }
+        };
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth' // صعود ناعم
+            });
         }
     </script>
 </body>
